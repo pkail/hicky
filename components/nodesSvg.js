@@ -25,28 +25,19 @@ function NodesSvg(props) {
 
 links.forEach(link => link.source = +link.sourceString);
 links.forEach(link => link.target = +link.targetString);
-links.forEach(link => link.target = +1);
-nodes.forEach(node => {if (+node.id == 137) {node.count = 320}});
+nodes.forEach(node => node.count >= 1000 ? node.count = 1000 : node.count = node.count);
 	console.log('links after converstion >>>', links)
 
   useEffect(() => {
   const svg = select(svgRef.current)
-			.attr("width", 900)
-			.attr("height", 800)
-			// var nodeHash = nodes.reduce((hash, node) => {hash[node.id] = node;
-			// 			return hash;
-			// 						}, {});
+			.attr("width", 1600)
+			.attr("height", 1000)
 
-			// links.forEach(link => {
-			// 		link.weight = parseInt(link.weight);
-			// 		link.source = nodeHash[link.source];
-			// 		link.target = nodeHash[link.target];
-			// 					});
 const linkForce = forceLink();
 const simulation = forceSimulation()
-				.force("charge", forceManyBody().strength(-1000))
-				.force("center", forceCenter().x(200).y(200))
-				.force("radial", forceRadial(800).strength(0.999))
+				.force("charge", forceManyBody().strength(-10000))
+				.force("center", forceCenter().x(500).y(500))
+				.force("radial", forceRadial(500).strength(0.999))
 				.force("link", linkForce)
 				.nodes(nodes)
 				.on("tick", forceTick);
@@ -56,10 +47,10 @@ simulation.force("link").links(links);
 select("svg").selectAll("line.link")
 				.data(links, d => `$(d.source.id) - $(d.target.id)`)
 				.enter().append("line")
+				.attr("class", "link")
 				.transition()
 				.delay((d,i) => i*10)
-				.attr("class", "link")
-				.style("stroke-width", 0.3)
+				.style("stroke-width", 3)
 				.style("stroke", "black");
 
 const nodeEnter = select("svg").selectAll("g.node")
@@ -72,12 +63,13 @@ nodeEnter.append("circle")
 				.transition()
 				.delay((d,i) => i*10)
 				.attr("r", d => Math.sqrt(d.count))
-				.style("fill", d => d.group === "system" ? "blue" : "red");
+				.style("fill", d => d.group == "system" ? "blue" : "red");
 
 nodeEnter.append("text")
+				.transition()
+				.delay((d,i) => i*10)
 				.style("text-anchor", "middle")
-				.attr("y", 20)
-				.attr("font-size", 10)
+				.attr("y", 35)
 				.text(d => d.id);
 
 function forceTick() {

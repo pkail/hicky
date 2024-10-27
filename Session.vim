@@ -13,13 +13,13 @@ if &shortmess =~ 'A'
 else
   set shortmess=aoO
 endif
-badd +61 ~/Data/WS/hicky/components/nodesSvg.js
-badd +223 ~/Data/WS/hicky/components/data.js
+badd +1436 components/data.js
+badd +28 ~/Data/WS/hicky/components/nodesSvg.js
 argglobal
 %argdel
 edit ~/Data/WS/hicky/components/nodesSvg.js
 argglobal
-balt ~/Data/WS/hicky/components/data.js
+balt components/data.js
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -30,12 +30,12 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 60 - ((9 * winheight(0) + 15) / 30)
+let s:l = 1 - ((0 * winheight(0) + 21) / 42)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 60
-normal! 017|
+keepjumps 1
+normal! 0
 tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
