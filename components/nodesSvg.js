@@ -20,24 +20,25 @@ function NodesSvg(props) {
   const  { ref, width=1, height=1 } = useResizeObserver();
 
   const { nodes, links } = props;
-	console.log('links >>>', links)
-	console.log('nodes >>>', nodes)
+	console.log('links in nodessvg >>>', links)
+	console.log('nodes in nodessvg>>>', nodes)
 
-links.forEach(link => link.source = +link.sourceString);
-links.forEach(link => link.target = +link.targetString);
-nodes.forEach(node => node.count >= 1000 ? node.count = 1000 : node.count = node.count);
-	console.log('links after converstion >>>', links)
+links.forEach(link => link.source = parseInt(link.source));
+links.forEach(link => link.target = parseInt(link.target));
+// nodes.forEach(node => node.id = parseInt(node.id));
+nodes.forEach(node => node.count >= 200 ? node.count = 200 : node.count = node.count);
+	console.log('nodes after conversion>>>', nodes)
+	console.log('links after conversion>>>', links)
 
   useEffect(() => {
+
   const svg = select(svgRef.current)
-			.attr("width", 1600)
-			.attr("height", 1000)
 
 const linkForce = forceLink();
 const simulation = forceSimulation()
-				.force("charge", forceManyBody().strength(-10000))
+				.force("charge", forceManyBody().strength(-1000))
 				.force("center", forceCenter().x(500).y(500))
-				.force("radial", forceRadial(500).strength(0.999))
+				.force("radial", forceRadial(10).strength(0.9))
 				.force("link", linkForce)
 				.nodes(nodes)
 				.on("tick", forceTick);
@@ -49,8 +50,8 @@ select("svg").selectAll("line.link")
 				.enter().append("line")
 				.attr("class", "link")
 				.transition()
-				.delay((d,i) => i*10)
-				.style("stroke-width", 3)
+				.delay((d,i) => i*20)
+				.style("stroke-width", d => d.count < 300 ? 3 : 12)
 				.style("stroke", "black");
 
 const nodeEnter = select("svg").selectAll("g.node")
@@ -61,16 +62,16 @@ const nodeEnter = select("svg").selectAll("g.node")
 
 nodeEnter.append("circle")
 				.transition()
-				.delay((d,i) => i*10)
-				.attr("r", d => Math.sqrt(d.count))
-				.style("fill", d => d.group == "system" ? "blue" : "red");
+				.delay((d,i) => i*20)
+				.attr("r", d => 2*Math.sqrt(d.count))
+				.style("fill", d => parseInt(d.id) < 53  ? "blue" : "red");
 
 nodeEnter.append("text")
 				.transition()
-				.delay((d,i) => i*10)
+				.delay((d,i) => i*20)
 				.style("text-anchor", "middle")
 				.attr("y", 35)
-				.text(d => d.id);
+				.text(d => d.count);
 
 function forceTick() {
 			selectAll("line.link")
@@ -88,8 +89,8 @@ function forceTick() {
   return (
       <div className="graph">
         <svg ref={svgRef}
-		width={800}
-		height={500}>
+		width={1400}
+		height={900}>
         </svg>
       </div>
   );
