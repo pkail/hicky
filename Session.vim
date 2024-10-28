@@ -15,12 +15,12 @@ else
 endif
 badd +54 components/nodesSvg.js
 badd +1691 components/nodesAsNumbers.js
-badd +2994 components/linksAsNumbers.js
+badd +5680 components/linksAsNumbers.js
 argglobal
 %argdel
-edit components/linksAsNumbers.js
+edit components/nodesSvg.js
 argglobal
-balt components/nodesAsNumbers.js
+balt components/linksAsNumbers.js
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}

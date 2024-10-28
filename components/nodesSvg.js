@@ -64,13 +64,13 @@ nodeEnter.append("circle")
 				.transition()
 				.delay((d,i) => i*20)
 				.attr("r", d => 2*Math.sqrt(d.count))
-				.style("fill", d => parseInt(d.id) < 53  ? "blue" : "red");
+				.style("fill", d => parseInt(d.id) < 53  ? "#A91D36" : "#F8A350");
 
 nodeEnter.append("text")
 				.transition()
 				.delay((d,i) => i*20)
 				.style("text-anchor", "middle")
-				.attr("y", 35)
+				.attr("y", d => 2*Math.sqrt(d.count)+15)
 				.text(d => d.count);
 
 function forceTick() {
