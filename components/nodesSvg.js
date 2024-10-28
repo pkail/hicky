@@ -36,9 +36,9 @@ nodes.forEach(node => node.count >= 200 ? node.count = 200 : node.count = node.c
 
 const linkForce = forceLink();
 const simulation = forceSimulation()
-				.force("charge", forceManyBody().strength(-1000))
-				.force("center", forceCenter().x(500).y(500))
-				.force("radial", forceRadial(10).strength(0.9))
+				.force("charge", forceManyBody().strength(-500))
+				.force("center", forceCenter().x(700).y(500))
+				.force("radial", forceRadial(5).strength(0.8))
 				.force("link", linkForce)
 				.nodes(nodes)
 				.on("tick", forceTick);
@@ -71,7 +71,7 @@ nodeEnter.append("text")
 				.delay((d,i) => i*20)
 				.style("text-anchor", "middle")
 				.attr("y", d => 2*Math.sqrt(d.count)+15)
-				.text(d => d.count);
+				.text(d => parseInt(d.id) < 53 ? d.id : d.id-52)
 
 function forceTick() {
 			selectAll("line.link")
@@ -90,7 +90,7 @@ function forceTick() {
       <div className="graph">
         <svg ref={svgRef}
 		width={1400}
-		height={900}>
+		height={1100}>
         </svg>
       </div>
   );
