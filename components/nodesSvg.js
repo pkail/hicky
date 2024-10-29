@@ -25,7 +25,7 @@ function NodesSvg(props) {
 
 links.forEach(link => link.source = parseInt(link.source));
 links.forEach(link => link.target = parseInt(link.target));
-// nodes.forEach(node => node.id = parseInt(node.id));
+nodes.forEach(node => node.id = parseInt(node.id)+1);
 nodes.forEach(node => node.count >= 200 ? node.count = 200 : node.count = node.count);
 	console.log('nodes after conversion>>>', nodes)
 	console.log('links after conversion>>>', links)
@@ -64,14 +64,17 @@ nodeEnter.append("circle")
 				.transition()
 				.delay((d,i) => i*20)
 				.attr("r", d => 2*Math.sqrt(d.count))
-				.style("fill", d => parseInt(d.id) < 53  ? "#A91D36" : "#F8A350");
+				.style("fill", d => parseInt(d.id) < 53  ? "#A91D36" : "#F8A350")
+				.style("opacity", (d,i) => i == 0 ? 0 : 1)
+
 
 nodeEnter.append("text")
 				.transition()
 				.delay((d,i) => i*20)
 				.style("text-anchor", "middle")
 				.attr("y", d => 2*Math.sqrt(d.count)+15)
-				.text(d => parseInt(d.id) < 53 ? d.id : d.id-52)
+				.text((d,i) => i < 53 ? i : i-52)
+				.style("opacity", (d,i) => i == 0 ? 0 : 1);
 
 function forceTick() {
 			selectAll("line.link")
