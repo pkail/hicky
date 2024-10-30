@@ -67,16 +67,6 @@ nodeEnter.append("circle")
 				.style("fill", d => parseInt(d.id) < 53  ? "#A91D36" : "#F8A350")
 				.style("opacity", (d,i) => i == 0 ? 0 : 1);
 
-// select("svg").selectAll("circle")
-// 				.data(nodes, d => d.id)
-// 				.enter().append("circle")
-// 				.attr("r", 130)
-// 				.attr("cx", 30)
-// 				.attr("cy", 50)
-// 				.attr("class", "legend")
-// 				.style("fill", "green")
-// 				.attr("transform", "translate(100,100)");
-
 nodeEnter.append("text")
 				.transition()
 				.delay((d,i) => i*20)
@@ -103,7 +93,10 @@ function forceTick() {
         <svg ref={svgRef}
 		width={1400}
 		height={1100}>
-			{/* <circle cx="100" cy="100" r="20" style="stroke: black; fill: green;" /> */}
+			<circle cx="100" cy="650" r="20" style={{fill: "#A91D36"}} />
+			<circle cx="100" cy="700" r="20" style={{fill: "#F8A350"}} />
+			<text x="140" y="660">Actors</text>
+			<text x="140" y="705">Systems</text>
         </svg>
       </div>
   );
