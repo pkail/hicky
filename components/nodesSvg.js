@@ -50,9 +50,9 @@ select("svg").selectAll("line.link")
 				.enter().append("line")
 				.attr("class", "link")
 				.transition()
-				.delay((d,i) => i*20)
+				.delay((d,i) => i*40)
 				.style("stroke-width", d => d.count < 300 ? 3 : 12)
-				.style("stroke", "black");
+				.style("stroke", "#666666");
 
 const nodeEnter = select("svg").selectAll("g.node")
 				.data(nodes, d => d.id)
@@ -65,15 +65,24 @@ nodeEnter.append("circle")
 				.delay((d,i) => i*20)
 				.attr("r", d => 2*Math.sqrt(d.count))
 				.style("fill", d => parseInt(d.id) < 53  ? "#A91D36" : "#F8A350")
-				.style("opacity", (d,i) => i == 0 ? 0 : 1)
+				.style("opacity", (d,i) => i == 0 ? 0 : 1);
 
+// select("svg").selectAll("circle")
+// 				.data(nodes, d => d.id)
+// 				.enter().append("circle")
+// 				.attr("r", 130)
+// 				.attr("cx", 30)
+// 				.attr("cy", 50)
+// 				.attr("class", "legend")
+// 				.style("fill", "green")
+// 				.attr("transform", "translate(100,100)");
 
 nodeEnter.append("text")
 				.transition()
 				.delay((d,i) => i*20)
 				.style("text-anchor", "middle")
 				.attr("y", d => 2*Math.sqrt(d.count)+15)
-				.text((d,i) => i < 53 ? i : i-52)
+				.text((d,i) => i < 53 ? i : (i-52))
 				.style("opacity", (d,i) => i == 0 ? 0 : 1);
 
 function forceTick() {
@@ -94,6 +103,7 @@ function forceTick() {
         <svg ref={svgRef}
 		width={1400}
 		height={1100}>
+			{/* <circle cx="100" cy="100" r="20" style="stroke: black; fill: green;" /> */}
         </svg>
       </div>
   );

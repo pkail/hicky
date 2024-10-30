@@ -13,14 +13,11 @@ if &shortmess =~ 'A'
 else
   set shortmess=aoO
 endif
-badd +1 components/nodesAsNumbers.js
-badd +3497 components/linksAsNumbers.js
-badd +74 components/nodesSvg.js
+badd +0 components/nodesSvg.js
 argglobal
 %argdel
 edit components/nodesSvg.js
 argglobal
-balt components/linksAsNumbers.js
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -50,7 +47,6 @@ if filereadable(s:sx)
 endif
 let &g:so = s:so_save | let &g:siso = s:siso_save
 set hlsearch
-nohlsearch
 doautoall SessionLoadPost
 unlet SessionLoad
 " vim: set ft=vim :
